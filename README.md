@@ -1,12 +1,6 @@
-# Learning Ising CFT Characters from Modular Bootstrap Constraints
+# Learning Ising CFT Characters from Cardy Condition Constraints
 
-This project reconstructs the **Ising conformal field theory (CFT) characters**
-
-- $\chi_1(t)$ — identity  
-- $\chi_\varepsilon(t)$ — energy  
-- $\chi_\sigma(t)$ — spin  
-
-using only the **modular S-transformation (Cardy) equations**, IR asymptotics, and one normalization anchor.
+This project reconstructs the **Ising conformal field theory (CFT) characters** using only the **modular S-transformation (Cardy) equations**, IR asymptotics, and one normalization anchor.
 
 A small neural network learns $\chi_\varepsilon$ and $\chi_\sigma$ with high accuracy, matching the exact $\theta/\eta$ expressions across:
 
@@ -40,9 +34,14 @@ $$
 
 In any 2D CFT with characters $\chi_i(\tau)$, modular invariance implies:
 
-$$
-\chi_i(-1/\tau) = \sum_j S_{ij}\,\chi_j(\tau).
-$$
+\[
+\sum_i N_{ab}{}^{i}\,\chi_i(t)
+=
+\sum_j
+\frac{S_{aj} S_{bj}}{S_{1j}}
+\;\chi_j(1/t)\,.
+\tag{Ising–Cardy}
+\]
 
 For the Ising model, the modular $S$-matrix is:
 
