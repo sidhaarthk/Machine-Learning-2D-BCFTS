@@ -1,71 +1,83 @@
 # Learning Ising CFT Characters from Modular Bootstrap Constraints
 
-This project demonstrates how to reconstruct the **Ising model conformal characters**  
-\(\chi_1(t), \chi_\varepsilon(t), \chi_\sigma(t)\)  
-using only **modular S-transformation (Cardy) constraints**, combined with IR asymptotics and a single normalization anchor.
+This project reconstructs the **Ising conformal field theory (CFT) characters**
 
-The neural network learns the energy and spin characters with high precision, matching the exact theta/eta expressions across the full interval  
-\( t \in [10^{-1}, 5] \).
+- $\chi_1(t)$ — identity  
+- $\chi_\varepsilon(t)$ — energy  
+- $\chi_\sigma(t)$ — spin  
+
+using only the **modular S-transformation (Cardy) equations**, IR asymptotics, and one normalization anchor.
+
+A small neural network learns $\chi_\varepsilon$ and $\chi_\sigma$ with high accuracy, matching the exact $\theta/\eta$ expressions across:
+
+$$
+t \in [10^{-1},\, 5].
+$$
 
 ---
 
 ## Features
 
-- Accurate PyTorch implementations of **Jacobi θ₂, θ₃, θ₄** and **Dedekind η** in float64.
-- Correct nome conventions:
-  - \( q_\theta = e^{-\pi t} \) for θ-functions,
-  - \( q_\eta = e^{-2\pi t} \) for η.
-- Exact computation of the identity character:
-  \[
-  \chi_1(t) = \frac{\sqrt{\theta_3} + \sqrt{\theta_4}}{2\sqrt{\eta}}.
-  \]
-- Neural network learns only the smooth correction functions  
-  \(u_\varepsilon(s), u_\sigma(s)\), where \(s = \log t\).
-- Enforces all three **Ising modular S-transform constraints**.
-- Uses smoothness regularization and IR asymptotic regularization.
-- Uses a single anchor point to fix the overall normalization.
-- Validates χ₁ against a **50-digit mpmath reference**.
-- Generates high-quality plots comparing learned vs. exact characters.
+- High-precision PyTorch implementations of **Jacobi $\theta_2,\theta_3,\theta_4$** and **Dedekind $\eta$**, in float64.
+- Correct canonical nomes:  
+  - $q_\theta = e^{-\pi t}$ for $\theta$–functions  
+  - $q_\eta = e^{-2\pi t}$ for $\eta$
+- Exact identity character:
+  $$
+  \chi_1(t) = \frac{\sqrt{\theta_3} + \sqrt{\theta_4}}{2\sqrt{\eta}}
+  $$
+- Neural network learns only the smooth deformations:
+  $$
+  \chi_i(t)=A_i(t)\,e^{u_i(\log t)}.
+  $$
+- Loss = Cardy residuals + IR regularisation + smoothness + single anchor.
+- χ₁ validated against **50-digit mpmath**.
+- Automatically generates comparison plots (NN vs exact).
 
 ---
 
 ## Background
 
-For characters \(\chi_i(\tau)\) of any 2D CFT, modular invariance implies:
-\[
+In any 2D CFT with characters $\chi_i(\tau)$, modular invariance implies:
+
+$$
 \chi_i(-1/\tau) = \sum_j S_{ij}\,\chi_j(\tau).
-\]
+$$
 
-Setting \(\tau = i t\) makes this a relation between values at \(t\) and \(1/t\).
+For the Ising model, the modular $S$-matrix is:
 
-The **Ising model** has three characters and the modular S-matrix:
-\[
-S = 
+$$
+S =
 \begin{pmatrix}
  \tfrac12 & \tfrac12 & \tfrac1{\sqrt2} \\
  \tfrac12 & \tfrac12 & -\tfrac1{\sqrt2} \\
  \tfrac1{\sqrt2} & -\tfrac1{\sqrt2} & 0
 \end{pmatrix}.
-\]
+$$
+
+Setting $\tau = i t$ gives functional relations between values at $t$ and $1/t$.
 
 Thus:
-\[
-\begin{aligned}
-\chi_1(t) &= \tfrac12 \chi_1(1/t) + \tfrac12 \chi_\varepsilon(1/t) + \tfrac1{\sqrt2}\chi_\sigma(1/t), \\
-\chi_\varepsilon(t) &= \tfrac12 \chi_1(1/t) + \tfrac12 \chi_\varepsilon(1/t) - \tfrac1{\sqrt2}\chi_\sigma(1/t), \\
-\chi_\sigma(t) &= \tfrac1{\sqrt2}\chi_1(1/t) - \tfrac1{\sqrt2}\chi_\varepsilon(1/t).
-\end{aligned}
-\]
 
-These equations define the residuals minimized during training.
+$$
+\chi_1(t)=\tfrac12\chi_1(1/t)+\tfrac12\chi_\varepsilon(1/t)+\tfrac1{\sqrt2}\chi_\sigma(1/t),
+$$
+
+$$
+\chi_\varepsilon(t)=\tfrac12\chi_1(1/t)+\tfrac12\chi_\varepsilon(1/t)-\tfrac1{\sqrt2}\chi_\sigma(1/t),
+$$
+
+$$
+\chi_\sigma(t)=\tfrac1{\sqrt2}\chi_1(1/t)-\tfrac1{\sqrt2}\chi_\varepsilon(1/t).
+$$
+
+These three Cardy equations are exactly the constraints used for training.
 
 ---
 
 ## Installation
 
-Clone the repository and install dependencies:
-
 ```bash
-git clone <this-repo>
-cd <this-repo>
-pip install torch numpy mpmath matplotlib
+git clone <repository-url>
+cd <repository>
+pip install torch numpy matplotlib mpmath
