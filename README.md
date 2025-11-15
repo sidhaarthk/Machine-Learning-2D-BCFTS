@@ -11,7 +11,7 @@ using only the **modular S-transformation (Cardy) equations**, IR asymptotics, a
 A small neural network learns $\chi_\varepsilon$ and $\chi_\sigma$ with high accuracy, matching the exact $\theta/\eta$ expressions across:
 
 $$
-t \in [10^{-1},\, 5].
+t \in [10^{-1}\, 5].
 $$
 
 ---
