@@ -68,7 +68,7 @@ def A_eps(t: torch.Tensor) -> torch.Tensor:
     IR envelope for ε-character (leading exponential decay).
     χ_ε(t) ≈ A_eps(t) * exp(u_eps(s)), t = exp(s).
     """
-    return torch.exp(-23.0 * pi * t / 24.0)   # Ising χ_ε IR asymptotics (kept from your code)
+    return torch.exp(-23.0 * pi * t / 24.0)   # Ising χ_ε IR asymptotics (kept)
 
 
 def A_sig(t: torch.Tensor) -> torch.Tensor:
@@ -324,7 +324,7 @@ def train(num_steps=100000, batch_size=256, lr_initial=1e-3):
     scheduler = optim.lr_scheduler.CosineAnnealingLR(
         optimizer,
         T_max=num_steps,
-        eta_min=1e-8     # final LR
+        eta_min=1e-9     # final LR
     )
 
     for step in range(1, num_steps + 1):
