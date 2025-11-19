@@ -341,7 +341,7 @@ def train(num_steps=100000, batch_size=256, lr_initial=1e-3):
         L_anchor = anchor_loss(t0=3.0, weight=20.0)
 
         # Total
-        loss = Lc + 1e2*La + 1e-3*Ls + L_anchor
+        loss = Lc + 1e2*La + 1e-3*Ls + 0*L_anchor
 
         optimizer.zero_grad()
         loss.backward()
@@ -459,7 +459,7 @@ def evaluate_and_plot():
 
 if __name__ == "__main__":
     print("Training NN to learn all three Ising characters (χ_1, χ_ε, χ_σ)…")
-    train(num_steps=500000, batch_size=256, lr_initial=1e-3)
+    train(num_steps=50000, batch_size=256, lr_initial=1e-3)
 
     print("Checking χ₁(t) precision against 50-dps mpmath reference…")
     check_chi1_accuracy()
